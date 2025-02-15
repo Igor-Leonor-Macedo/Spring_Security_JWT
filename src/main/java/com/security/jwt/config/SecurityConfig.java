@@ -34,14 +34,17 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin())) // Alterado para sameOrigin
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers("/authenticate").permitAll()
-                                .requestMatchers(HttpMethod.POST,"users").permitAll()
-                        .anyRequest().authenticated())
+                                .requestMatchers(HttpMethod.POST, "users").permitAll()
+                                .requestMatchers("/h2-console/**").permitAll()
+                                .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()));
         return http.build();
     }
+
 
     @Bean
     JwtDecoder jwtDecoder() {
