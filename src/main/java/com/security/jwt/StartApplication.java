@@ -20,21 +20,21 @@ public class StartApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Criação do usuário admin
-        createUserIfNotExists("admin", "123", "ROLE_ADMIN");
+        createUserIfNotExists("698.596.291-29", "123", "ROLE_ADMIN");
 
         // Criação do usuário user
-        createUserIfNotExists("user", "123", "ROLE_USER");
+        createUserIfNotExists("538.459.824-70", "123", "ROLE_USER");
 
         // Criação do usuário user
-        createUserIfNotExists("igor", "123", "ROLE_MANAGER");
+        createUserIfNotExists("750.802.731-00", "123", "ROLE_MANAGER");
     }
 
-    private void createUserIfNotExists(String username, String password, String role) {
-        Optional<User> optionalUser = repository.findByUsername(username);
+    private void createUserIfNotExists(String cpf, String password, String role) {
+        Optional<User> optionalUser = repository.findByCpf(cpf);
 
         if (optionalUser.isEmpty()) {
             User user = new User();
-            user.setUsername(username);
+            user.setCpf(cpf);
             user.setPassword(new BCryptPasswordEncoder().encode(password));
             user.getRoles().add(role);
             repository.save(user);

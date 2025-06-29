@@ -28,7 +28,7 @@ public class UserAuthenticated implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.user.getUsername();
+        return this.user.getCpf();
     }
 
     @Override

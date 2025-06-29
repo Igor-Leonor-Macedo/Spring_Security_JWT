@@ -16,10 +16,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
+    public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
+        return userRepository.findByCpf(cpf)
                 .map(UserAuthenticated::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with cpf: " + cpf));
     }
 
 }

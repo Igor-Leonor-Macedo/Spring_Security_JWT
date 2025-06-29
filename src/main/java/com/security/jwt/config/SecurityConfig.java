@@ -36,7 +36,9 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin())) // Alterado para sameOrigin
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/authenticate").permitAll()
+                        auth -> auth
+                                .requestMatchers("/authenticate").permitAll()
+                                .requestMatchers("/validate").permitAll()
                                 .requestMatchers(HttpMethod.POST, "users").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
                                 .anyRequest().authenticated())
