@@ -1,6 +1,6 @@
 package com.security.jwt.controller;
 
-import com.security.jwt.dto.LoginRequestDto;
+import com.security.jwt.dto.request.LoginRequestDto;
 import com.security.jwt.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

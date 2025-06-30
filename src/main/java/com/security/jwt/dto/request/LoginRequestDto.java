@@ -1,4 +1,4 @@
-package com.security.jwt.dto;
+package com.security.jwt.dto.request;
 
 public class LoginRequestDto {
     private String CPF;

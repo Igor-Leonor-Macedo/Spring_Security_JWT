@@ -1,6 +1,6 @@
     package com.security.jwt.service;
 
-    import com.security.jwt.dto.UserRequestDto;
+    import com.security.jwt.dto.request.UserRequestDto;
     import com.security.jwt.entity.User;
     import com.security.jwt.exception.ExistingUserException;
     import com.security.jwt.repository.UserRepository;
@@ -27,6 +27,7 @@
             User user = new User();
             user.setCpf(userRequestDto.getCpf());
             user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
+            user.setRoles(userRequestDto.getRoles());
             userRepository.save(user);
             return ("Usuário Salvo.");
         }

@@ -1,6 +1,6 @@
     package com.security.jwt.controller;
 
-    import com.security.jwt.dto.UserRequestDto;
+    import com.security.jwt.dto.request.UserRequestDto;
     import com.security.jwt.service.UserService;
     import jakarta.validation.Valid;
     import org.springframework.http.HttpStatus;
