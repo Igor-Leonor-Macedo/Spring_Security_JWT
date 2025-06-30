@@ -1,6 +1,6 @@
-package com.security.jwt.DTO;
+package com.security.jwt.dto;
 
-public class LoginRequestDTO {
+public class LoginRequestDto {
     private String CPF;
     private String Password;
 

@@ -1,20 +1,33 @@
-package com.security.jwt.service;
+    package com.security.jwt.service;
 
-import com.security.jwt.model.User;
-import com.security.jwt.repository.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
+    import com.security.jwt.dto.UserRequestDto;
+    import com.security.jwt.entity.User;
+    import com.security.jwt.exception.ExistingUserException;
+    import com.security.jwt.repository.UserRepository;
+    import jakarta.transaction.Transactional;
+    import org.springframework.security.crypto.password.PasswordEncoder;
+    import org.springframework.stereotype.Service;
 
-@Service
-public class UserService {
-    private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @Service
+    @Transactional
+    public class UserService {
+        private final UserRepository userRepository;
+        private final PasswordEncoder passwordEncoder;
+
+        public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+            this.userRepository = userRepository;
+            this.passwordEncoder = passwordEncoder;
+        }
+
+        public String createUser(UserRequestDto userRequestDto){
+            if (userRepository.existsByCpf(userRequestDto.getCpf())){
+                throw new ExistingUserException("CPF já cadastrado!");}
+
+            User user = new User();
+            user.setCpf(userRequestDto.getCpf());
+            user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
+            userRepository.save(user);
+            return ("Usuário Salvo.");
+        }
     }
-
-    public User save(User user) {
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-}

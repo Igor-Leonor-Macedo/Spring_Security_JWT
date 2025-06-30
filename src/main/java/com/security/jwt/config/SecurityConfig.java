@@ -39,7 +39,7 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers("/authenticate").permitAll()
                                 .requestMatchers("/validate").permitAll()
-                                .requestMatchers(HttpMethod.POST, "users").permitAll()
+                                .requestMatchers(HttpMethod.POST, "users/**").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())

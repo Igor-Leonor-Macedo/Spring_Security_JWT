@@ -1,6 +1,6 @@
 package com.security.jwt.controller;
 
-import com.security.jwt.DTO.LoginRequestDTO;
+import com.security.jwt.dto.LoginRequestDto;
 import com.security.jwt.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +28,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("authenticate")
-    public String authenticate(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public String authenticate(@RequestBody LoginRequestDto loginRequestDTO) {
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getCPF(), loginRequestDTO.getPassword());
         return authenticationService.authenticate(authentication);

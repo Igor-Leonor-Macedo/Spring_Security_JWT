@@ -1,6 +1,6 @@
 package com.security.jwt;
 
-import com.security.jwt.model.User;
+import com.security.jwt.entity.User;
 import com.security.jwt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
