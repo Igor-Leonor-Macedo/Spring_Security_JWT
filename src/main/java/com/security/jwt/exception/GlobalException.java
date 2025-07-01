@@ -49,6 +49,13 @@
                     return new ResponseEntity<>(error, HttpStatus.CONFLICT);
                 }
 
+            @ExceptionHandler(UserNotFoundException.class)
+            public ResponseEntity<ErrorResponse> User_Not_Found(
+                    UserNotFoundException ex, WebRequest request) {
+                ErrorResponse error = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), ex.getMessage());
+                return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+            }
+
             // OPCIONAL: Handler para exceções não tratadas
             @ExceptionHandler(Exception.class)
             public ResponseEntity<ErrorResponse> handleGenericException(

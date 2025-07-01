@@ -1,5 +1,6 @@
 package com.security.jwt.service.jwt;
 
+import com.security.jwt.entity.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.*;
@@ -20,7 +21,7 @@ public class JwtService {
         this.decoder = decoder;
     }
 
-    public String generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication, User user) {
         Instant now = Instant.now();
         long expiry = 36000L;
 
@@ -34,7 +35,9 @@ public class JwtService {
                 .issuedAt(now)                      // Quando foi emitido
                 .expiresAt(now.plusSeconds(expiry)) // Quando expira
                 .subject(authentication.getName())  // Usuário (subject)
-                .claim("roles", roles)        // Roles customizadas
+                //.claim("roles", roles)            // Roles customizadas
+                .claim("userId", user.getId())           // ID do usuário
+                .claim("roles", user.getRoles())         // Regras do usuário
                 .build();
 
         return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers("/authenticate").permitAll()
+                                .requestMatchers("/authenticateUser").permitAll()
                                 .requestMatchers("/validate").permitAll()
                                 .requestMatchers(HttpMethod.POST, "users/**").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()

@@ -2,6 +2,7 @@ package com.security.jwt.controller;
 
 import com.security.jwt.dto.request.LoginRequestDto;
 import com.security.jwt.service.AuthenticationService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,11 +29,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("authenticate")
-    public String authenticate(@RequestBody LoginRequestDto loginRequestDTO) {
+    public String authenticate(@Valid @RequestBody LoginRequestDto loginRequestDTO) {
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getCPF(), loginRequestDTO.getPassword());
         return authenticationService.authenticate(authentication);
     }
+
     @PostMapping("validate")
     public ResponseEntity<Map<String, Object>> validateToken(@RequestBody Map<String, String> request) {
         String token = request.get("token");
