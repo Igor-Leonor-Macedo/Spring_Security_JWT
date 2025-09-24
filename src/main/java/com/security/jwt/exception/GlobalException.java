@@ -55,6 +55,12 @@
                 ErrorResponse error = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), ex.getMessage());
                 return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
             }
+            @ExceptionHandler(InvalidCredentialsException.class)
+            public ResponseEntity<ErrorResponse> Invalid_Credentials(
+                    InvalidCredentialsException ex, WebRequest request) {
+                ErrorResponse error = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+            }
 
             // OPCIONAL: Handler para exceções não tratadas
             @ExceptionHandler(Exception.class)
