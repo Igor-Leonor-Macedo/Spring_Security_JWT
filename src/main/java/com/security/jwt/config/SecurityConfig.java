@@ -39,6 +39,7 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers("/authenticate").permitAll()
                                 .requestMatchers("/authenticateUser").permitAll()
+                                .requestMatchers("/login").permitAll()
                                 .requestMatchers("/validate").permitAll()
                                 .requestMatchers(HttpMethod.POST, "users/**").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
