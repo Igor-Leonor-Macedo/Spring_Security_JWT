@@ -1,20 +1,25 @@
 package com.security.jwt.controller;
 
 import com.security.jwt.dto.request.LoginRequestDto;
+import com.security.jwt.exception.InvalidCredentialsException;
+import com.security.jwt.exception.UserNotFoundException;
+import com.security.jwt.model.ErrorResponse;
 import com.security.jwt.service.AuthenticationService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200") // Aplica CORS para todos os métodos desse controlador
+@CrossOrigin(origins = "http://localhost:4200", methods = {RequestMethod.GET, RequestMethod.POST}) // Aplica CORS para todos os métodos desse controlador
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -25,19 +30,23 @@ public class AuthenticationController {
 
     @PostMapping("login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
-        return ResponseEntity.ok(authenticationService.login(loginRequestDto));
+            // Retorna o token como String para o front-end
+            String token = authenticationService.login(loginRequestDto);
+            return ResponseEntity.ok(token); // Wrap token in a response object
     }
 
     @PostMapping("authenticateUser")
-    public String authenticate(Authentication authentication) {
-        return authenticationService.authenticate(authentication);
+    public ResponseEntity<?> authenticate(Authentication authentication) {
+        String token = authenticationService.authenticate(authentication);
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("authenticate")
-    public String authenticate(@Valid @RequestBody LoginRequestDto loginRequestDTO) {
+    public ResponseEntity<?> authenticate(@Valid @RequestBody LoginRequestDto loginRequestDTO) {
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getCPF(), loginRequestDTO.getPassword());
-        return authenticationService.authenticate(authentication);
+        String token = authenticationService.authenticate(authentication);
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("validate")
