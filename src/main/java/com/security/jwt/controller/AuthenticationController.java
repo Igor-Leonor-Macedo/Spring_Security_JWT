@@ -14,13 +14,18 @@ import java.util.Map;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", methods = {RequestMethod.GET, RequestMethod.POST}) // Aplica CORS para todos os métodos desse controlador
+@CrossOrigin(origins = "http://localhost:4200") // Aplica CORS para todos os métodos desse controlador
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
+    }
+
+    @PostMapping("login")
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        return ResponseEntity.ok(authenticationService.login(loginRequestDto));
     }
 
     @PostMapping("authenticateUser")
